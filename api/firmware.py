@@ -11,10 +11,10 @@ class FirmwareAPI(BaseAPI):
         self.user_id = None
 
     @allure.step("Creating Firmware")
-    def crete_firmware(self, ):
+    def crete_firmware(self, file_name):
         files = [
             ('firmware', (
-                'VIEW_SKYS_Gn10_MCU_2.0.438.tgz', open('VIEW_SKYS_Gn10_MCU_2.0.438.tgz', 'rb'),
+                file_name, open(file_name, 'rb'),
                 'application/octet-stream'))
         ]
         return self.make_request(FIRMWARE_URL, method='POST', expected_response_code=201, files=files)
