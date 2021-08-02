@@ -5,8 +5,8 @@ import requests
 
 URL_DICT = {
     'QA': 'https://api-qa.viewcorp.xyz/api/v1/',
-    'Staging': 'https://api-demo.viewcorp.xyz/api/v1/',
-    # 'Staging': 'https://cloud-stage.view.com/api/v1/'
+    'Demo': 'https://api-demo.viewcorp.xyz/api/v1/',
+    'Staging': 'https://cloud-stage.view.com/api/v1/'
 }
 BASEURL = URL_DICT[os.getenv('Environment', "QA")]
 
