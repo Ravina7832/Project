@@ -3,12 +3,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from Pages.BasePage import BasePage
+from Pages.BasePage import BasePage, take_screenshot_on_failure
 
 
 class AddUsers(BasePage):
     """add users"""
     USERS = (By.LINK_TEXT, "Users")
+    ALL_USERS = (By.XPATH, "//*[@id='root']/div/section[2]/div/div[2]/div[3]/table")
     ADD_USERS = (By.XPATH, "//*[@id='root']/div/section[2]/div/div[2]/div[1]/button")
     FIRST_NAME = (By.NAME, "firstName")
     LAST_NAME = (By.NAME, "lastName")
@@ -34,10 +35,10 @@ class AddUsers(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
 
+    @take_screenshot_on_failure
     def add_users(self, firstname, lastname, email, phone, password, confirm_password, date):
         self.do_click(self.USERS)
-        ALL_USERS = (By.XPATH, "//*[@id='root']/div/section[2]/div/div[2]/div[3]/table")
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(ALL_USERS))
+        self.wait_for_element(self.ALL_USERS)
         self.do_click(self.ADD_USERS)
         self.do_send_keys(self.FIRST_NAME, firstname)
         self.do_send_keys(self.LAST_NAME, lastname)
@@ -49,12 +50,12 @@ class AddUsers(BasePage):
         self.do_click(self.SEL_OCCUPANT)
         self.do_click(self.NEXT)
         self.do_click(self.TIMELIMITATION)
-        # self.do_click(self.DATE)
         self.do_send_keys(self.DATE, date)
         self.do_click(self.ZONE)
         self.do_click(self.SAVE)
         time.sleep(6)
 
+    @take_screenshot_on_failure
     def search_users(self, Search_users):
         ALL_USERS = (By.XPATH, "//*[@id='root']/div/section[2]/div/div[2]/div[3]/table")
         WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(ALL_USERS))

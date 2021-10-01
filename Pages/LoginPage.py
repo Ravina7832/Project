@@ -1,10 +1,11 @@
 import time
 
 import allure
+from pytest_steps import test_steps
 from selenium.webdriver.common.by import By
 
 from Configuration.Context import TestData
-from Pages.BasePage import BasePage
+from Pages.BasePage import BasePage, take_screenshot_on_failure
 from Pages.HomePage import HomePage
 
 
@@ -18,16 +19,9 @@ class LoginPage(BasePage):
         super().__init__(driver)
         self.driver.get(TestData.BASE_URL)
 
-    @allure.severity(allure.severity_level.CRITICAL)
+    @take_screenshot_on_failure
     def do_login(self, username, password):
-        status = self.is_visible(self.LOGO)
-        if status:
-            assert True
-        else:
-            allure.attach(self.driver.get_screenshot_as_png(), name="testLoginScreen", attachment_type="AttachmentType.PNG")
-            self.driver.close()
-            assert False
-
+        self.wait_for_element(self.LOGO)
         self.do_send_keys(self.EMAIL_ADDRESS, username)
         self.do_click(self.SUBMIT_BUTTON)
         self.do_send_keys(self.PASSWORD, password)

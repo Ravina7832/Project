@@ -9,7 +9,7 @@ class BaseTest:
     @pytest.fixture(params=["chrome"], scope="class")
     def set_up(self, request):
         if request.param == "chrome":
-            web_driver = webdriver.Chrome()
+            web_driver = webdriver.Chrome('/Users/pc/PycharmProjects/Project/chromedriver')
             web_driver.maximize_window()
         request.cls.driver = web_driver
         # yield

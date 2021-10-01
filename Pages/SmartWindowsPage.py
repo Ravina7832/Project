@@ -8,12 +8,11 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from Pages.BasePage import BasePage
+from Pages.BasePage import BasePage, take_screenshot_on_failure
 
 
 class SmartWindows(BasePage):
-    DROP_DOWN = (By.XPATH, "//button[contains(@class,'DropDown')]")
-    OPTION = (By.XPATH, "//span[@title='Net5']")
+    SAVED_SCHEDULE = (By.XPATH, "(//div[contains(@class,'MuiCollapse')])[1]")
     SMART_WINDOWS = (By.LINK_TEXT, "Smart Windows")
     SCHEDULES = (By.LINK_TEXT, "Schedules")
     ADD_SCHEDULE = (By.XPATH, "//h6[text()='ADD SCHEDULE']")
@@ -52,11 +51,13 @@ class SmartWindows(BasePage):
     # END_DATE = (By.XPATH, "//input[@name='endDate']")
     END_TIME = (By.XPATH, "(//input[@name='totime'])[2]")
     REPEAT = (By.XPATH,
-              "(//span[@class='MuiIconButton-label'])[25]")
+              "//*[@id='root']/div/section[2]/div/div/div/div[2]/div/div[2]/div[2]/div[1]/div/div[3]/div/div["
+              "2]/form/div/div[1]/div[5]/label/span[1]/span[1]")
     SUNDAY = (By.XPATH, "(//div[@class = 'schedule-form_dayIcon__8wig6'])[1]")
     MONDAY = (By.XPATH, "(//div[@class = 'schedule-form_dayIcon__8wig6'])[2]")
     THURSDAY = (By.XPATH, "(//div[@class = 'schedule-form_dayIcon__8wig6'])[5]")
-    ZONE_GROUPS = (By.XPATH, "(//span[@class='MuiIconButton-label'])[27]")
+    ZONE_GROUPS = (By.XPATH, "//*[@id='root']/div/section[2]/div/div/div/div[2]/div/div[2]/div[2]/div[2]/div["
+                             "2]/span/span[1]")
     SAVE = (By.XPATH, "//button[@type='submit']")
     SEARCH_ZONES = (By.XPATH, "(//input[@type='text'])[4]")
     SEARCH_CLICK = (By.XPATH, "(//span[@class='MuiIconButton-label'])[20]")
@@ -73,18 +74,15 @@ class SmartWindows(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
 
-    def smart_windows(self, name, starttime, endtime, search_schedules, from_date, to_date):
-        IMAGE = (By.XPATH, "//*[@id='root']/div/section[2]/div/div/div[1]/div[1]/div/img")
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(IMAGE))
-        self.do_click(self.DROP_DOWN)
-        self.do_click(self.OPTION)
-        time.sleep(2)
+    @take_screenshot_on_failure
+    def smart_windows(self):
         self.do_click(self.SMART_WINDOWS)
         time.sleep(2)
         self.do_click(self.SCHEDULES)
 
-        SAVED_SCHEDULE = (By.XPATH, "(//div[contains(@class,'MuiCollapse')])[1]")
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(SAVED_SCHEDULE))
+    @take_screenshot_on_failure
+    def add_schedule(self, name, starttime, endtime):
+        self.wait_for_element(self.SAVED_SCHEDULE)
         self.do_click(self.ADD_SCHEDULE)
         time.sleep(2)
         self.do_send_keys(self.NAME, name)
@@ -111,7 +109,6 @@ class SmartWindows(BasePage):
         self.do_click(self.SELECT_END_DATE)
         self.do_click(self.CLICK_OK2)
         time.sleep(2)
-
         self.do_send_keys(self.START_TIME, starttime)
 
         self.do_send_keys(self.END_TIME, endtime)
@@ -127,8 +124,8 @@ class SmartWindows(BasePage):
         self.do_click(self.SAVE)
         time.sleep(6)
 
-        '''search Zones & Schedules'''
-
+    @take_screenshot_on_failure
+    def search_schedule(self, search_schedules):
         self.do_send_keys(self.SEARCH_SCHEDULES, search_schedules)
         time.sleep(1)
         self.do_send_keys(self.SEARCH_SCHEDULES, Keys.ARROW_DOWN)
@@ -144,7 +141,8 @@ class SmartWindows(BasePage):
         # time.sleep(1)
         # self.do_click(self.SEARCH_CLICK)
 
-        """filter"""
+    @take_screenshot_on_failure
+    def add_filter(self, from_date, to_date):
         self.do_click(self.FILTER_SCHEDULES)
         self.do_send_keys(self.FROM_DATE, from_date)
         self.do_send_keys(self.TO_DATE, to_date)
