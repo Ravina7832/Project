@@ -1,12 +1,6 @@
 import time
-
-from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.support.select import Select
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 from Pages.BasePage import BasePage, take_screenshot_on_failure
 
@@ -16,6 +10,7 @@ class SmartWindows(BasePage):
     SMART_WINDOWS = (By.LINK_TEXT, "Smart Windows")
     SCHEDULES = (By.LINK_TEXT, "Schedules")
     ADD_SCHEDULE = (By.XPATH, "//h6[text()='ADD SCHEDULE']")
+
     """Schedule Details"""
     NAME = (By.XPATH, "//input[@name='name']")
     SELECT_TINT = (By.XPATH, "(//div[@class='schedule-form_tintCircle__1TtfZ']//div)[3]")
@@ -29,47 +24,36 @@ class SmartWindows(BasePage):
     SELECT_END_MONTH = (By.XPATH, "/html/body/div[2]/div[3]/div/div[1]/div/div[2]/div[1]/div[1]/button[2]")
     SELECT_END_DATE = (By.XPATH, "/html/body/div[2]/div[3]/div/div[1]/div/div[2]/div[2]/div/div[5]/div[3]/button")
     CLICK_OK2 = (By.XPATH, "/html/body/div[2]/div[3]/div/div[2]/button[3]")
-
-    START_TIME_PICKER = (By.XPATH, "(//button[@type='button'])[6]")
-    SELECT_START_HOUR = (By.XPATH, "/html/body/div[2]/div[3]/div/div[1]/div/div[2]/div/div/span[12]")
-    CLICK_ON_START_MINUTES = (By.XPATH, "(//button[@type='button'])[11]")
-    SELECT_START_MINUTES = (By.XPATH, "(//span[contains(@class, 'MuiPickersClockNumber')])[7]")
-    CLICK_ON_PM1 = (By.XPATH, "(//button[@type='button'])[13]")
-    CLICK_OK3 = (By.XPATH, "/html/body/div[2]/div[3]/div/div[2]/button[3]")
-
-    END_TIME_PICKER = (By.XPATH, "(//button[@type='button'])[8]")
-    SELECT_END_HOUR = (By.XPATH, "(//span[contains(@class, 'MuiPickersClockNumber')])[2]")
-    CLICK_ON_END_MINUTES = (By.XPATH, "(//button[@type='button'])[11]")
-    SELECT_END_MINUTES = (By.XPATH, "(//span[contains(@class, 'MuiPickersClockNumber')])[7]")
-    CLICK_ON_PM2 = (By.XPATH, "(//button[@type='button'])[13]")
-    CLICK_OK4 = (By.XPATH, "/html/body/div[2]/div[3]/div/div[2]/button[3]")
-
-    ALL_NUMBERS = (By.XPATH, "//span[contains(@class,'MuiPickersClockNumber')]")
-
-    # START_DATE = (By.NAME, "startDate")
     START_TIME = (By.XPATH, "(//input[@name='totime'])[1]")
-    # END_DATE = (By.XPATH, "//input[@name='endDate']")
     END_TIME = (By.XPATH, "(//input[@name='totime'])[2]")
     REPEAT = (By.XPATH,
               "//*[@id='root']/div/section[2]/div/div/div/div[2]/div/div[2]/div[2]/div[1]/div/div[3]/div/div["
               "2]/form/div/div[1]/div[5]/label/span[1]/span[1]")
     SUNDAY = (By.XPATH, "(//div[@class = 'schedule-form_dayIcon__8wig6'])[1]")
     MONDAY = (By.XPATH, "(//div[@class = 'schedule-form_dayIcon__8wig6'])[2]")
+    TUESDAY = (By.XPATH, "(//div[@class = 'schedule-form_dayIcon__8wig6'])[3]")
+    WEDNESDAY = (By.XPATH, "(//div[@class = 'schedule-form_dayIcon__8wig6'])[4]")
     THURSDAY = (By.XPATH, "(//div[@class = 'schedule-form_dayIcon__8wig6'])[5]")
+    FRIDAY = (By.XPATH, "(//div[@class = 'schedule-form_dayIcon__8wig6'])[6]")
+    SATURDAY = (By.XPATH, "(//div[@class = 'schedule-form_dayIcon__8wig6'])[7]")
     ZONE_GROUPS = (By.XPATH, "//*[@id='root']/div/section[2]/div/div/div/div[2]/div/div[2]/div[2]/div[2]/div["
                              "2]/span/span[1]")
     SAVE = (By.XPATH, "//button[@type='submit']")
+    VERIFY_ADD = (By.XPATH, "(//div[@class='MuiCollapse-wrapper'])[5]")
     SEARCH_ZONES = (By.XPATH, "(//input[@type='text'])[4]")
     SEARCH_CLICK = (By.XPATH, "(//span[@class='MuiIconButton-label'])[20]")
     SEARCH_SCHEDULES = By.XPATH, "(//input[@type='text'])[1]"
     CLICK_SEARCH = (By.XPATH, "(//button[@type='button'])[4]")
-    SELECT_OPTION = (By.XPATH, "")
 
     '''filter'''
     FILTER_SCHEDULES = (By.XPATH, "//span[@class='MuiSwitch-root']")
     FROM_DATE = (By.XPATH, "//input[@placeholder='From Date']")
     TO_DATE = (By.XPATH, "//input[@placeholder='To Date']")
     APPLY = (By.XPATH, "(//button[contains(@class,'MuiButtonBase')])[6]")
+
+    """Edit"""
+    EDIT = (By.XPATH, "//span[text()='edit']")
+    VERIFY_EDIT = (By.TAG_NAME, "h6")
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -88,17 +72,6 @@ class SmartWindows(BasePage):
         self.do_send_keys(self.NAME, name)
         self.do_click(self.SELECT_TINT)
         time.sleep(2)
-
-        # selected_year_string = "September 2021"
-        # target_year_string = "December 2022"
-        # previous_button_xpath = "(//button[@type='button'])[12]"
-        # next_button_xpath = "(//button[@type='button'])[13]"
-        # if target_year_string > selected_year_string:
-        #     next_click = self.driver.find_element_by_xpath(next_button_xpath)
-        #     next_click.click()
-        # else:
-        #     previous_click = self.driver.find_element_by_xpath(previous_button_xpath)
-        #     previous_click.click()
         self.do_click(self.START_DATE_PICKER)
         self.do_click(self.SELECT_START_MONTH)
         self.do_click(self.SELECT_START_DATE)
@@ -117,12 +90,19 @@ class SmartWindows(BasePage):
         time.sleep(2)
         self.do_click(self.SUNDAY)
         self.do_click(self.MONDAY)
+        self.do_click(self.TUESDAY)
+        self.do_click(self.WEDNESDAY)
         self.do_click(self.THURSDAY)
+        self.do_click(self.FRIDAY)
+        self.do_click(self.SATURDAY)
         time.sleep(2)
         self.do_click(self.ZONE_GROUPS)
         time.sleep(2)
         self.do_click(self.SAVE)
-        time.sleep(6)
+        time.sleep(4)
+
+        page_source = self.driver.page_source
+        assert page_source.__contains__('Automatic')
 
     @take_screenshot_on_failure
     def search_schedule(self, search_schedules):
@@ -132,23 +112,29 @@ class SmartWindows(BasePage):
         self.do_send_keys(self.SEARCH_SCHEDULES, Keys.RETURN)
         time.sleep(1)
         self.do_click(self.CLICK_SEARCH)
-        time.sleep(5)
-
-        # self.do_click(self.SEARCH_ZONES)
-        # time.sleep(1)
-        # self.do_send_keys(self.SEARCH_ZONES, Keys.ARROW_DOWN)
-        # self.do_send_keys(self.SEARCH_ZONES, Keys.RETURN)
-        # time.sleep(1)
-        # self.do_click(self.SEARCH_CLICK)
+        time.sleep(3)
 
     @take_screenshot_on_failure
     def add_filter(self, from_date, to_date):
         self.do_click(self.FILTER_SCHEDULES)
+        time.sleep(2)
         self.do_send_keys(self.FROM_DATE, from_date)
+        time.sleep(1)
         self.do_send_keys(self.TO_DATE, to_date)
         self.do_click(self.APPLY)
+        time.sleep(2)
+        self.do_click(self.FILTER_SCHEDULES)
+        time.sleep(2)
 
-        # Data = (By.XPATH, "(//div[contains(@class,'MuiPaper-root')])[1]")
-        # WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(Data))
-        # action = ActionChains(self.driver)
-        # action.move_to_element(self.SEARCH_SCHEDULES).click().perform()
+    def edit_schedule(self, name, starttime, endtime):
+        self.do_click(self.EDIT)
+        time.sleep(2)
+        self.back_space(self.NAME)
+        self.do_send_keys(self.NAME, name)
+        time.sleep(2)
+        self.do_send_keys(self.START_TIME, starttime)
+        self.do_send_keys(self.END_TIME, endtime)
+        self.do_click(self.SAVE)
+        time.sleep(3)
+        page_source = self.driver.page_source
+        assert page_source.__contains__('Automatic Edit')

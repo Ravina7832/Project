@@ -9,7 +9,7 @@ class Test_Home(BaseTest):
         self.loginPage = LoginPage(self.driver)
         self.loginPage.do_login(TestData.USERNAME, TestData.PASSWORD)
 
-        self.click_user = HomePage(self.driver)
-        self.click_user.sel_users()
+        self.select_user = HomePage(self.driver)
+        self.select_user.sel_users()
 
 

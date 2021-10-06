@@ -1,33 +1,49 @@
-class TestData:
-    # CHROME_EXECUTABLE_PATH = "C:/New folder/chromedriver.exe"
+from faker import Faker
 
+
+class TestData:
+    fake = Faker()
     BASE_URL = "https://cloud-qa.view.com/overview"
     USERNAME = "qa@view.com"
     PASSWORD = "viewnet195!"
+    # PATH = "C:/Users/pc/Desktop/View Manage/Book1.xlsx"
 
     """ADD USERS"""
-    FIRSTNAME = "Pooja"
-    LASTNAME = "Singh"
-    EMAIL = "pooja123.singh@gmail.com"
-    PHONE = "9694566650"
+    FIRSTNAME = fake.first_name()
+    LASTNAME = fake.last_name()
+    PHONE = "8799665455"
     PASSWORD1 = "123456789"
     CONFIRMPASSWORD = "123456789"
-    DATE = "30092021"
+    DATE = fake.date()
+    EMAIL = fake.email()
 
     """SEARCH USERS"""
-    SEARCH = "Pooja"
+    SEARCH_NAME = fake.name()
+    SEARCH_EMAIL = fake.email()
+
+    """EDIT USER"""
+    EDIT_FNAME = fake.first_name()
+    EDIT_LNAME = fake.last_name()
+    EDIT_EMAIL = "test0123@view.com"
+    EDIT_PHONE = "7894561239"
 
     """ADD SCHEDULE"""
-    SCHEDULE_NAME = "Test Automation"
-    # STARTDATE = "09/28/2021"
+    SCHEDULE_NAME = "Automatic"
     STARTTIME = "0930A"
-    # ENDDATE = "09/30/2021"
     ENDTIME = "1030P"
 
     """SEARCH ZONES"""
     SEARCHZONES = "galaxy_test"
-    SEARCHSCHEDULES = "Weekday Wake Up"
+    SEARCHSCHEDULES = "Automatic"
 
     """Filter"""
     FROMDATE = "10062021"
     TODATE = "10302021"
+
+    """EDIT SCHEDULE"""
+    EDIT_NAME = "Automatic Edit"
+    EDIT_START_TIME = "1250P"
+    EDIT_END_TIME = "0805A"
+
+
+

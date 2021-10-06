@@ -1,7 +1,5 @@
 import time
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 from Pages.BasePage import BasePage, take_screenshot_on_failure
 
@@ -23,22 +21,40 @@ class AddUsers(BasePage):
     TIMELIMITATION = (By.XPATH, "/html/body/div[4]/div[3]/div/div/div[2]/form/div/div[1]/label/span[1]/span[1]")
     DATE = (By.ID, "date")
     ZONE = (By.XPATH, "//*[@id='panel1a-header']/div[1]/label/span[1]/span[1]")
-    SAVE = (By.XPATH, "(//button[@type='button'])[33]")
-    ERROR_MSG = (By.XPATH, "//*[@id='root']/div[2]/div/div[2]")
-    CANCEL = (By.XPATH, "/html/body/div[3]/div[3]/div/div/div[1]/h2/div[1]/button")
+    SAVE = (By.XPATH, "(//button[@type='button'])[34]")
+
+    """filter"""
+    FIELDS = (By.XPATH, "//div[@role='button']")
+    IN_NAME = (By.XPATH, '//li[@data-value="firstName,lastName"]')
+    IN_EMAIL = (By.XPATH, "//li[@data-value='email']")
+    IN_PHONE = (By.XPATH, "//li[@data-value='mobilePhone']")
 
     """Search users"""
 
     SEARCH_USERS = (By.XPATH, "//input[@placeholder='Search users']")
     SEARCH_CLICK = (By.XPATH, "//*[@id='root']/div/section[2]/div/div[2]/div[1]/div/div/div/div[1]/button")
 
+    """Checkbox"""
+    BUILDING_MANAGERS = (
+        By.XPATH, "//*[@id='root']/div/section[2]/div/div[1]/div[2]/div[2]/div/div[2]/label/span[1]/span[1]")
+    CSM_S = (By.XPATH, "//*[@id='root']/div/section[2]/div/div[1]/div[2]/div[2]/div/div[3]/label/span[1]")
+    OCCUPANTS = (By.XPATH, "//*[@id='root']/div/section[2]/div/div[1]/div[2]/div[2]/div/div[4]/label/span[1]")
+
+    """EDIT USER"""
+    EDIT_USER = (By.XPATH, "(//button[@title='Edit'])[1]")
+    EDIT_SAVE = (By.XPATH, "(//span[@class='MuiButton-label'])[5]")
+
     def __init__(self, driver):
         super().__init__(driver)
 
     @take_screenshot_on_failure
-    def add_users(self, firstname, lastname, email, phone, password, confirm_password, date):
+    def users(self):
         self.do_click(self.USERS)
         self.wait_for_element(self.ALL_USERS)
+        time.sleep(2)
+
+    @take_screenshot_on_failure
+    def add_users(self, firstname, lastname, email, phone, password, confirm_password, date):
         self.do_click(self.ADD_USERS)
         self.do_send_keys(self.FIRST_NAME, firstname)
         self.do_send_keys(self.LAST_NAME, lastname)
@@ -53,21 +69,65 @@ class AddUsers(BasePage):
         self.do_send_keys(self.DATE, date)
         self.do_click(self.ZONE)
         self.do_click(self.SAVE)
-        time.sleep(6)
+        time.sleep(4)
+        page_source = self.driver.page_source
+        assert page_source.__contains__('8799665455')
 
     @take_screenshot_on_failure
-    def search_users(self, Search_users):
-        ALL_USERS = (By.XPATH, "//*[@id='root']/div/section[2]/div/div[2]/div[3]/table")
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(ALL_USERS))
-        # msg = self.get_element_text(self.ERROR_MSG)
-        # Actual_msg = "Email already exists"
-        # if msg.contentEquals(Actual_msg):
-        #     self.do_click(self.CANCEL)
-        #     self.do_send_keys(self.SEARCH_USERS, Search_users)
-        #     self.do_click(self.SEARCH_CLICK)
-        #
-        # else:
-        self.do_send_keys(self.SEARCH_USERS, Search_users)
+    def search_users(self, Search_name, Search_email, Search_phone):
+        self.wait_for_element(self.ALL_USERS)
+        self.do_click(self.FIELDS)
+        time.sleep(2)
+        self.do_click(self.IN_NAME)
+        self.do_click(self.BUILDING_MANAGERS)
+        time.sleep(1)
+        self.do_send_keys(self.SEARCH_USERS, Search_name)
         self.do_click(self.SEARCH_CLICK)
+        time.sleep(2)
+        self.do_click(self.BUILDING_MANAGERS)
+        self.wait_for_element(self.ALL_USERS)
+
+        time.sleep(3)
+        self.do_click(self.FIELDS)
+        time.sleep(2)
+        self.do_click(self.IN_EMAIL)
+        time.sleep(3)
+        self.do_click(self.CSM_S)
+        time.sleep(1)
+        self.do_send_keys(self.SEARCH_USERS, Search_email)
+        self.do_click(self.SEARCH_CLICK)
+        time.sleep(2)
+        self.do_click(self.CSM_S)
+
+        time.sleep(4)
+        self.do_click(self.FIELDS)
+        time.sleep(2)
+        self.do_click(self.IN_PHONE)
+        time.sleep(3)
+        self.do_click(self.OCCUPANTS)
+        time.sleep(1)
+        self.do_send_keys(self.SEARCH_USERS, Search_phone)
+        time.sleep(2)
+        self.do_click(self.SEARCH_CLICK)
+        time.sleep(2)
+        self.do_click(self.OCCUPANTS)
+        time.sleep(2)
+
+    def edit_user(self, firstname, lastname, email, phone):
+        self.do_click(self.EDIT_USER)
+        self.back_space(self.FIRST_NAME)
+        self.do_send_keys(self.FIRST_NAME, firstname)
+        self.back_space(self.LAST_NAME)
+        self.do_send_keys(self.LAST_NAME, lastname)
+        self.back_space(self.EMAIL)
+        self.do_send_keys(self.EMAIL, email)
+        self.back_space(self.PHONE)
+        self.do_send_keys(self.PHONE, phone)
+        self.do_click(self.NEXT)
+        self.do_click(self.EDIT_SAVE)
+
+        page_source = self.driver.page_source
+        assert page_source.__contains__('7894561239')
+
 
 

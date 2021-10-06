@@ -1,4 +1,5 @@
 import allure
+from faker import Faker
 
 from Configuration.Context import TestData
 from Pages.HomePage import HomePage
@@ -17,8 +18,9 @@ class Test_AddUsers(BaseTest):
         self.loginPage.do_login(TestData.USERNAME, TestData.PASSWORD)
         self.click_user = HomePage(self.driver)
         self.click_user.sel_users()
-        self.add_Users = AddUsers(self.driver)
-        self.add_Users.add_users(TestData.FIRSTNAME, TestData.LASTNAME, TestData.EMAIL, TestData.PHONE,
-                                 TestData.PASSWORD1, TestData.CONFIRMPASSWORD, TestData.DATE)
-        self.search = AddUsers(self.driver)
-        self.search.search_users(TestData.SEARCH)
+        self.users = AddUsers(self.driver)
+        self.users.users()
+        self.users.add_users(TestData.FIRSTNAME, TestData.LASTNAME, TestData.EMAIL, TestData.PHONE,
+                             TestData.PASSWORD1, TestData.CONFIRMPASSWORD, TestData.DATE)
+        self.users.search_users(TestData.SEARCH_NAME, TestData.SEARCH_EMAIL, TestData.PHONE)
+        self.users.edit_user(TestData.EDIT_FNAME, TestData.EDIT_LNAME, TestData.EDIT_EMAIL, TestData.EDIT_PHONE)

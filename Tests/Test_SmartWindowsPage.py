@@ -23,3 +23,4 @@ class Test_SmartWindows(BaseTest):
         self.smart_windows.add_schedule(TestData.SCHEDULE_NAME, TestData.STARTTIME, TestData.ENDTIME)
         self.smart_windows.search_schedule(TestData.SEARCHSCHEDULES)
         self.smart_windows.add_filter(TestData.FROMDATE, TestData.TODATE)
+        self.smart_windows.edit_schedule(TestData.EDIT_NAME, TestData.EDIT_START_TIME, TestData.EDIT_END_TIME)

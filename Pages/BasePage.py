@@ -1,8 +1,7 @@
 import functools
-
 import allure
 from allure_commons.types import AttachmentType
-from selenium.webdriver.support.select import Select
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -45,3 +44,12 @@ class BasePage:
     def get_title(self, title):
         WebDriverWait(self.driver, 10).until(EC.title_is(title))
         return self.driver.title
+
+    def is_displayed(self,by_locator):
+        self.wait_for_element(by_locator)
+
+    def back_space(self, by_locator):
+        self.wait_for_element(by_locator).click()
+        self.wait_for_element(by_locator).send_keys(Keys.CONTROL + 'a', Keys.BACKSPACE)
+
+

@@ -1,5 +1,6 @@
 import pytest
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 from Configuration.Context import TestData
 
@@ -9,9 +10,10 @@ class BaseTest:
     @pytest.fixture(params=["chrome"], scope="class")
     def set_up(self, request):
         if request.param == "chrome":
-            web_driver = webdriver.Chrome('/Users/pc/PycharmProjects/Project/chromedriver')
+            # options = webdriver.ChromeOptions()
+            # options.headless = True
+            web_driver = webdriver.Chrome()
             web_driver.maximize_window()
         request.cls.driver = web_driver
-        # yield
-        # web_driver.close()
-        # executable_path=TestData.CHROME_EXECUTABLE_PATH
+        yield
+        web_driver.close()

@@ -12,4 +12,4 @@ class Test_login(BaseTest):
     @allure.severity(allure.severity_level.CRITICAL)
     def test_login(self):
         self.loginPage = LoginPage(self.driver)
-        self.loginPage.do_login(TestData.USERNAME, TestData.PASSWORD)
+        self.loginPage.do_login(TestData.USERNAME,TestData.PASSWORD)
