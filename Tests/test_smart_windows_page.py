@@ -5,7 +5,7 @@ from Pages.AddUsersPage import AddUsers
 from Pages.HomePage import HomePage
 from Pages.LoginPage import LoginPage
 from Pages.SmartWindowsPage import SmartWindows
-from Tests.Test_conf import BaseTest
+from Tests.test_conf import BaseTest
 
 
 @allure.title("TEST SUITE 3")

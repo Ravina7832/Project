@@ -4,7 +4,7 @@ from faker import Faker
 from Configuration.Context import TestData
 from Pages.HomePage import HomePage
 from Pages.LoginPage import LoginPage
-from Tests.Test_conf import BaseTest
+from Tests.test_conf import BaseTest
 from Pages.AddUsersPage import AddUsers
 
 
