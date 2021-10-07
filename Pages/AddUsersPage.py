@@ -38,7 +38,7 @@ class AddUsers(BasePage):
 
     """Checkbox"""
     BUILDING_MANAGERS = (
-        By.XPATH, "//*[@id='root']/div/section[2]/div/div[1]/div[2]/div[2]/div/div[2]/label/span[1]/span[1]")
+        By.XPATH, "//*[@id='root']/div/section[2]/div/div[1]/div[2]/div[2]/div/div[2]/label/span[1]")
     CSM_S = (By.XPATH, "//*[@id='root']/div/section[2]/div/div[1]/div[2]/div[2]/div/div[3]/label/span[1]")
     OCCUPANTS = (By.XPATH, "//*[@id='root']/div/section[2]/div/div[1]/div[2]/div[2]/div/div[4]/label/span[1]")
 

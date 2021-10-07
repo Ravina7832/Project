@@ -70,7 +70,7 @@ class SmartWindows(BasePage):
 
     @allure.step("Click Add Schedule")
     @take_screenshot_on_failure
-    def add_schedule(self, starttime, endtime):
+    def add_schedule(self):
         self.wait_for_element(self.SAVED_SCHEDULE)
         self.do_click(self.ADD_SCHEDULE)
 

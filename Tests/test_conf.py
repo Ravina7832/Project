@@ -2,6 +2,7 @@ import pytest
 from selenium import webdriver
 import os
 from Configuration.constants import CHROME_PATH
+import os, sys, stat
 
 
 @pytest.mark.usefixtures("set_up")
