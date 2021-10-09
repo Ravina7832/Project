@@ -23,8 +23,11 @@ class TestData:
     """EDIT USER"""
     EDIT_FNAME = fake.first_name()
     EDIT_LNAME = fake.last_name()
-    EDIT_EMAIL = "test0123@view.com"
+    EDIT_EMAIL = fake.email()
     EDIT_PHONE = "7894561239"
+
+    """DELETE USER"""
+    DEL_SEARCH = "7894561239"
 
     """ADD SCHEDULE"""
     SCHEDULE_NAME = "Automatic"
@@ -40,9 +43,10 @@ class TestData:
     TODATE = "10302021"
 
     """EDIT SCHEDULE"""
-    EDIT_NAME = " Edit"
+    EDIT_NAME = "Automatic Edit"
     EDIT_START_TIME = "1250P"
     EDIT_END_TIME = "0805A"
+
 
 
 

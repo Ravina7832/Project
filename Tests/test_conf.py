@@ -1,8 +1,9 @@
 import pytest
 from selenium import webdriver
-import os
 from Configuration.constants import CHROME_PATH
 import os, sys, stat
+
+CHROME_PATH = "/Users/pc/PycharmProjects/Project/chromedriver"
 
 
 @pytest.mark.usefixtures("set_up")
@@ -14,7 +15,6 @@ class BaseTest:
         # web_driver = webdriver.Chrome(CHROME_PATH)
         # web_driver.maximize_window()
         # request.cls.driver = web_driver
-
 
         os.environ["webdriver.chrome.driver"] = CHROME_PATH
 
@@ -36,5 +36,6 @@ class BaseTest:
         driver.maximize_window()
         driver.implicitly_wait(10)
         request.cls.driver = driver
-    # yield
-    # web_driver.close()
+
+        yield
+        driver.close()

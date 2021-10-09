@@ -32,6 +32,7 @@ class BasePage:
         self.wait_for_element(by_locator).click()
 
     def clear(self, by_locator):
+        self.wait_for_element(by_locator).click()
         self.wait_for_element(by_locator).clear()
 
     def do_send_keys(self, by_locator, text):
@@ -50,6 +51,7 @@ class BasePage:
 
     def back_space(self, by_locator):
         self.wait_for_element(by_locator).click()
-        self.wait_for_element(by_locator).send_keys(Keys.CONTROL + 'a', Keys.DELETE)
+        self.wait_for_element(by_locator).send_keys(Keys.COMMAND, 'a', Keys.DELETE)
+
 
 

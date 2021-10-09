@@ -8,10 +8,11 @@ from Pages.BasePage import BasePage, take_screenshot_on_failure
 
 
 class SmartWindows(BasePage):
-    SAVED_SCHEDULE = (By.XPATH, "(//div[contains(@class,'MuiCollapse')])[1]")
+    SAVED_SCHEDULE = (By.XPATH, "//table[@class='MuiTable-root admin-users_tableroot__yLP9W']")
     SMART_WINDOWS = (By.LINK_TEXT, "Smart Windows")
     SCHEDULES = (By.LINK_TEXT, "Schedules")
     ADD_SCHEDULE = (By.XPATH, "//h6[text()='ADD SCHEDULE']")
+    IMAGE = (By.XPATH, "//*[@id='root']/div/section[2]/div/div/div[1]/div[1]/div/img")
 
     """Schedule Details"""
     NAME = (By.XPATH, "//input[@name='name']")
@@ -45,7 +46,8 @@ class SmartWindows(BasePage):
     SEARCH_ZONES = (By.XPATH, "(//input[@type='text'])[4]")
     SEARCH_CLICK = (By.XPATH, "(//span[@class='MuiIconButton-label'])[20]")
     SEARCH_SCHEDULES = By.XPATH, "(//input[@type='text'])[1]"
-    CLICK_SEARCH = (By.XPATH, "(//button[@type='button'])[4]")
+    CLICK_SEARCH = (By.XPATH, "//*[@id='root]/div/section[2]/div/div/div/div[2]/div/div[1]/div[2]/div/div/div/div["
+                              "1]/button")
 
     '''filter'''
     FILTER_SCHEDULES = (By.XPATH, "//span[@class='MuiSwitch-root']")
@@ -64,8 +66,8 @@ class SmartWindows(BasePage):
     @allure.step("Go to SmartWindows And click Schedule")
     @take_screenshot_on_failure
     def smart_windows(self):
+        self.wait_for_element(self.IMAGE)
         self.do_click(self.SMART_WINDOWS)
-        time.sleep(2)
         self.do_click(self.SCHEDULES)
 
     @allure.step("Click Add Schedule")
@@ -76,7 +78,7 @@ class SmartWindows(BasePage):
 
     @allure.step("Enter Schedule Name")
     @take_screenshot_on_failure
-    def schedule_name(self,name):
+    def schedule_name(self, name):
         self.do_send_keys(self.NAME, name)
 
     @allure.step("Select Tint")
@@ -125,23 +127,28 @@ class SmartWindows(BasePage):
     @allure.step("Save")
     @take_screenshot_on_failure
     def schedule_save(self):
+        time.sleep(2)
         self.do_click(self.ZONE_GROUPS)
         self.do_click(self.SAVE)
-
         page_source = self.driver.page_source
         assert page_source.__contains__('Automatic')
 
     @allure.step("Verify Search")
     @take_screenshot_on_failure
     def search_schedule(self, search_schedules):
+        self.wait_for_element(self.SAVED_SCHEDULE)
+        time.sleep(4)
         self.do_send_keys(self.SEARCH_SCHEDULES, search_schedules)
+        time.sleep(4)
+        self.wait_for_element(self.SAVED_SCHEDULE)
         self.do_send_keys(self.SEARCH_SCHEDULES, Keys.ARROW_DOWN)
         self.do_send_keys(self.SEARCH_SCHEDULES, Keys.RETURN)
-        self.do_click(self.CLICK_SEARCH)
+        self.wait_for_element(self.SAVED_SCHEDULE)
 
     @allure.step("Verify Filter Feature")
     @take_screenshot_on_failure
     def add_filter(self, from_date, to_date):
+        self.wait_for_element(self.SAVED_SCHEDULE)
         self.do_click(self.FILTER_SCHEDULES)
         self.do_send_keys(self.FROM_DATE, from_date)
         self.do_send_keys(self.TO_DATE, to_date)
@@ -151,6 +158,7 @@ class SmartWindows(BasePage):
     @allure.step("Verify Edit Schedule Feature")
     @take_screenshot_on_failure
     def edit_schedule(self, name, starttime, endtime):
+        self.wait_for_element(self.SAVED_SCHEDULE)
         self.do_click(self.EDIT)
         self.back_space(self.NAME)
         self.do_send_keys(self.NAME, name)

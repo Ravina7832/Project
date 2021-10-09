@@ -1,3 +1,5 @@
+import time
+
 import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -28,5 +30,6 @@ class HomePage(BasePage):
     @allure.step("Select Net5")
     @take_screenshot_on_failure
     def select(self):
+        time.sleep(2)
         self.do_click(self.OPTION)
 

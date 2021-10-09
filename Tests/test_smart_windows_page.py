@@ -1,7 +1,6 @@
 import allure
 
 from Configuration.Context import TestData
-from Pages.AddUsersPage import AddUsers
 from Pages.HomePage import HomePage
 from Pages.LoginPage import LoginPage
 from Pages.SmartWindowsPage import SmartWindows
@@ -27,7 +26,7 @@ class Test_SmartWindows(BaseTest):
         self.smart_windows = SmartWindows(self.driver)
         self.smart_windows.smart_windows()
         self.smart_windows.add_schedule()
-        self.smart_windows.schedule_name(TestData.SEARCH_NAME)
+        self.smart_windows.schedule_name(TestData.SCHEDULE_NAME)
         self.smart_windows.sel_tint()
         self.smart_windows.startdate()
         self.smart_windows.enddate()
