@@ -46,12 +46,10 @@ class BasePage:
         WebDriverWait(self.driver, 10).until(EC.title_is(title))
         return self.driver.title
 
-    def is_displayed(self,by_locator):
+    def is_displayed(self ,by_locator):
         self.wait_for_element(by_locator)
 
     def back_space(self, by_locator):
         self.wait_for_element(by_locator).click()
-        self.wait_for_element(by_locator).send_keys(Keys.COMMAND, 'a', Keys.DELETE)
-
-
-
+        # self.wait_for_element(by_locator).send_keys(Keys.COMMAND, 'a', Keys.DELETE)
+        self.wait_for_element(by_locator).send_keys(Keys.CONTROL, 'a', Keys.BACKSPACE)

@@ -1,9 +1,10 @@
 import pytest
 from selenium import webdriver
-from Configuration.constants import CHROME_PATH
+from Project.Configuration.constants import CHROME_PATH
 import os, sys, stat
 
-CHROME_PATH = "/Users/pc/PycharmProjects/Project/chromedriver"
+CHROME_PATH = "C:/Users/pc/Documents/rtf/Resource/driver/chromedriver.exe"
+# CHROME_PATH = "C:/Users/pc/Documents/rtf/Project/Resource/driver/chromedriver"
 
 
 @pytest.mark.usefixtures("set_up")

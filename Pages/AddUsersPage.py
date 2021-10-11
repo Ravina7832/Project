@@ -3,7 +3,7 @@ import time
 import allure
 from selenium.webdriver.common.by import By
 
-from Pages.BasePage import BasePage, take_screenshot_on_failure
+from Project.Pages.BasePage import BasePage, take_screenshot_on_failure
 
 
 class AddUsers(BasePage):
@@ -36,12 +36,6 @@ class AddUsers(BasePage):
 
     SEARCH_USERS = (By.XPATH, "//input[@placeholder='Search users']")
     SEARCH_CLICK = (By.XPATH, "//*[@id='root']/div/section[2]/div/div[2]/div[1]/div/div/div/div[1]/button")
-
-    """Checkbox"""
-    BUILDING_MANAGERS = (
-        By.XPATH, "//*[@id='root']/div/section[2]/div/div[1]/div[2]/div[2]/div/div[2]/label/span[1]")
-    CSM_S = (By.XPATH, "//*[@id='root']/div/section[2]/div/div[1]/div[2]/div[2]/div/div[3]/label/span[1]")
-    OCCUPANTS = (By.XPATH, "//*[@id='root']/div/section[2]/div/div[1]/div[2]/div[2]/div/div[4]/label/span[1]")
 
     """EDIT USER"""
     EDIT_USER = (By.XPATH, "(//button[@title='Edit'])[1]")
@@ -118,53 +112,91 @@ class AddUsers(BasePage):
     def sel_date(self, date):
         self.do_send_keys(self.DATE, date)
 
-    @allure.step("select Zone")
+    @allure.step("Select Zone")
     @take_screenshot_on_failure
     def zone(self):
         time.sleep(2)
         self.do_click(self.ZONE)
-        self.do_click(self.SAVE)
 
     @allure.step("Click Save")
     @take_screenshot_on_failure
     def save(self):
         self.do_click(self.SAVE)
+
+    @allure.step("Verify Added User")
+    @take_screenshot_on_failure
+    def verify_addUser(self):
         page_source = self.driver.page_source
         assert page_source.__contains__('8799665455')
 
     @allure.step("Verify Search feature")
-    @allure.step("Select Field by name and Search")
+    @allure.step("Select Field By Name And Search")
+    @allure.step("Click On Fields")
     @take_screenshot_on_failure
-    def search_users(self):
-        self.wait_for_element(self.ALL_USERS)
-        time.sleep(3)
-        self.do_click(self.FIELDS)
-
-    @allure.step("Select Field by Name and Search")
-    @take_screenshot_on_failure
-    def search_name(self, Search_name):
-        self.do_click(self.IN_NAME)
-        self.do_send_keys(self.SEARCH_USERS, Search_name)
-        self.do_click(self.SEARCH_CLICK)
-
-    @allure.step("Select Field by Email and Search")
-    @take_screenshot_on_failure
-    def search_email(self, Search_email):
-        self.wait_for_element(self.ALL_USERS)
-        time.sleep(3)
-        self.do_click(self.FIELDS)
-        self.do_click(self.IN_EMAIL)
-        self.do_send_keys(self.SEARCH_USERS, Search_email)
-        self.do_click(self.SEARCH_CLICK)
-
-    @allure.step("Select Field by Phone and Search")
-    @take_screenshot_on_failure
-    def search_phone(self, Search_phone):
+    def search_users1(self):
         self.wait_for_element(self.ALL_USERS)
         time.sleep(2)
         self.do_click(self.FIELDS)
+
+    @allure.step("Select Field by Name")
+    @take_screenshot_on_failure
+    def sel_fieldname(self):
+        self.do_click(self.IN_NAME)
+
+    @allure.step("Enter Name")
+    @take_screenshot_on_failure
+    def search_name(self, Search_name):
+        self.do_send_keys(self.SEARCH_USERS, Search_name)
+
+    @allure.step("Click Search")
+    @take_screenshot_on_failure
+    def search_nclick(self):
+        self.do_click(self.SEARCH_CLICK)
+
+    @allure.step("Select Field by Email and Search")
+    @allure.step("Click On Fields")
+    @take_screenshot_on_failure
+    def search_users2(self):
+        self.wait_for_element(self.ALL_USERS)
+        time.sleep(3)
+        self.do_click(self.FIELDS)
+
+    @allure.step("Select By Email")
+    @take_screenshot_on_failure
+    def sel_fieldemail(self):
+        self.do_click(self.IN_EMAIL)
+
+    @allure.step("Enter Email")
+    @take_screenshot_on_failure
+    def search_email(self, Search_email):
+        self.do_send_keys(self.SEARCH_USERS, Search_email)
+
+    @allure.step("Click Search")
+    @take_screenshot_on_failure
+    def search_eclick(self):
+        self.do_click(self.SEARCH_CLICK)
+
+    @allure.step("Select Field by Phone and Search")
+    @allure.step("Click On Fields")
+    @take_screenshot_on_failure
+    def search_users3(self):
+        self.wait_for_element(self.ALL_USERS)
+        time.sleep(2)
+        self.do_click(self.FIELDS)
+
+    @allure.step("Select By Phone")
+    @take_screenshot_on_failure
+    def sel_fieldphone(self):
         self.do_click(self.IN_PHONE)
+
+    @allure.step("Enter Phone No.")
+    @take_screenshot_on_failure
+    def search_phone(self, Search_phone):
         self.do_send_keys(self.SEARCH_USERS, Search_phone)
+
+    @allure.step("Click Search")
+    @take_screenshot_on_failure
+    def search_pclick(self):
         time.sleep(2)
         self.do_click(self.SEARCH_CLICK)
 
@@ -199,36 +231,36 @@ class AddUsers(BasePage):
         self.back_space(self.PHONE)
         self.do_send_keys(self.PHONE, phone)
 
-    @allure.step("Click Next and Save")
+    @allure.step("Click Next")
+    @take_screenshot_on_failure
+    def edit_next(self):
+        self.do_click(self.NEXT)
+
+    @allure.step("Click Save")
     @take_screenshot_on_failure
     def edit_save(self):
-        self.do_click(self.NEXT)
         self.do_click(self.EDIT_SAVE)
 
+    @allure.step("Verify Edit User")
+    @take_screenshot_on_failure
+    def verify_editUSer(self):
         page_source = self.driver.page_source
         assert page_source.__contains__('7894561239')
 
+    @allure.step("Enter Phone No.")
+    @take_screenshot_on_failure
     def del_search(self, Search_phone):
-        self.wait_for_element(self.ALL_USERS)
-        time.sleep(2)
-        self.do_click(self.FIELDS)
-        self.do_click(self.IN_PHONE)
         self.do_send_keys(self.SEARCH_USERS, Search_phone)
-        self.do_click(self.SEARCH_CLICK)
 
+    @allure.step("Click Delete")
+    @take_screenshot_on_failure
     def delete_user(self):
         self.wait_for_element(self.ALL_USERS)
-        time.sleep(2)
+        time.sleep(4)
         self.do_click(self.DEL_USER)
+
+    @allure.step("Click Yes")
+    @take_screenshot_on_failure
+    def delete(self):
         self.wait_for_element(self.DEL_POPUP)
         self.do_click(self.YES)
-
-    @allure.step("select checkbox")
-    @take_screenshot_on_failure
-    def person_as(self):
-        self.do_click(self.BUILDING_MANAGERS)
-        self.do_click(self.BUILDING_MANAGERS)
-        self.do_click(self.CSM_S)
-        self.do_click(self.CSM_S)
-        self.do_click(self.OCCUPANTS)
-        self.do_click(self.OCCUPANTS)

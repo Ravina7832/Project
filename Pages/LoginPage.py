@@ -1,9 +1,8 @@
-import time
-
 import allure
 from selenium.webdriver.common.by import By
-from Configuration.Context import TestData
-from Pages.BasePage import BasePage, take_screenshot_on_failure
+
+from Project.Configuration.Context import TestData
+from Project.Pages.BasePage import BasePage, take_screenshot_on_failure
 
 
 class LoginPage(BasePage):

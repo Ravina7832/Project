@@ -1,10 +1,10 @@
 import allure
 
-from Configuration.Context import TestData
-from Pages.HomePage import HomePage
-from Pages.LoginPage import LoginPage
-from Pages.SmartWindowsPage import SmartWindows
-from Tests.test_conf import BaseTest
+from Project.Configuration.Context import TestData
+from Project.Pages.HomePage import HomePage
+from Project.Pages.LoginPage import LoginPage
+from Project.Pages.SmartWindowsPage import SmartWindows
+from Project.Tests.test_conf import BaseTest
 
 
 @allure.title("TEST SUITE 3")
@@ -33,7 +33,23 @@ class Test_SmartWindows(BaseTest):
         self.smart_windows.starttime(TestData.STARTTIME)
         self.smart_windows.endtime(TestData.ENDTIME)
         self.smart_windows.sel_days()
+        self.smart_windows.sel_sun()
+        self.smart_windows.sel_mon()
+        self.smart_windows.sel_tues()
+        self.smart_windows.sel_wed()
+        self.smart_windows.sel_thurs()
+        self.smart_windows.sel_fri()
+        self.smart_windows.sel_sat()
+        self.smart_windows.zone()
         self.smart_windows.schedule_save()
+        self.smart_windows.verify_saved_schedule()
         self.smart_windows.search_schedule(TestData.SEARCHSCHEDULES)
-        self.smart_windows.add_filter(TestData.FROMDATE, TestData.TODATE)
-        self.smart_windows.edit_schedule(TestData.EDIT_NAME, TestData.EDIT_START_TIME, TestData.EDIT_END_TIME)
+        self.smart_windows.select_schedule()
+        self.smart_windows.add_filter()
+        self.smart_windows.st_date(TestData.FROMDATE)
+        self.smart_windows.ed_date(TestData.TODATE)
+        self.smart_windows.apply()
+        self.smart_windows.edit_schedule()
+        self.smart_windows.edit_name(TestData.EDIT_NAME)
+        self.smart_windows.edit_starttime(TestData.EDIT_START_TIME)
+        self.smart_windows.edit_endtime(TestData.EDIT_END_TIME)

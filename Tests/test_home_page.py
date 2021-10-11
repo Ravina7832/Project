@@ -1,7 +1,7 @@
-from Configuration.Context import TestData
-from Pages.HomePage import HomePage
-from Pages.LoginPage import LoginPage
-from Tests.test_conf import BaseTest
+from Project.Configuration.Context import TestData
+from Project.Pages.HomePage import HomePage
+from Project.Pages.LoginPage import LoginPage
+from Project.Tests.test_conf import BaseTest
 
 
 class Test_Home(BaseTest):

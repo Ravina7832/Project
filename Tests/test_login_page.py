@@ -1,8 +1,8 @@
 import allure
 
-from Configuration.Context import TestData
-from Pages.LoginPage import LoginPage
-from Tests.test_conf import BaseTest
+from Project.Configuration.Context import TestData
+from Project.Pages.LoginPage import LoginPage
+from Project.Tests.test_conf import BaseTest
 
 
 @allure.title("TEST SUITE 1")

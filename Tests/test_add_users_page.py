@@ -1,9 +1,10 @@
 import allure
-from Configuration.Context import TestData
-from Pages.HomePage import HomePage
-from Pages.LoginPage import LoginPage
-from Tests.test_conf import BaseTest
-from Pages.AddUsersPage import AddUsers
+
+from Project.Configuration.Context import TestData
+from Project.Pages.AddUsersPage import AddUsers
+from Project.Pages.HomePage import HomePage
+from Project.Pages.LoginPage import LoginPage
+from Project.Tests.test_conf import BaseTest
 
 
 @allure.title("TEST SUITE 2")
@@ -36,16 +37,31 @@ class Test_AddUsers(BaseTest):
         self.users.time()
         self.users.sel_date(TestData.DATE)
         self.users.zone()
-        self.users.search_users()
+        self.users.save()
+        self.users.verify_addUser()
+        self.users.search_users1()
+        self.users.sel_fieldname()
         self.users.search_name(TestData.SEARCH_NAME)
+        self.users.search_nclick()
+        self.users.search_users2()
+        self.users.sel_fieldemail()
         self.users.search_email(TestData.SEARCH_EMAIL)
+        self.users.search_eclick()
+        self.users.search_users3()
+        self.users.sel_fieldphone()
         self.users.search_phone(TestData.PHONE)
+        self.users.search_pclick()
         self.users.edit_user()
         self.users.edit_fname(TestData.EDIT_FNAME)
         self.users.edit_lname(TestData.EDIT_LNAME)
         self.users.edit_email(TestData.EDIT_EMAIL)
         self.users.edit_phone(TestData.EDIT_PHONE)
+        self.users.edit_next()
         self.users.edit_save()
+        self.users.verify_editUSer()
+        self.users.search_users3()
+        self.users.sel_fieldphone()
         self.users.del_search(TestData.DEL_SEARCH)
+        self.users.search_pclick()
         self.users.delete_user()
-        # self.users.person_as()
+        self.users.delete()

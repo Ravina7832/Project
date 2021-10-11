@@ -2,11 +2,8 @@ import time
 
 import allure
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
 
-from Configuration.Context import TestData
-from Pages.BasePage import BasePage, take_screenshot_on_failure
+from Project.Pages.BasePage import BasePage, take_screenshot_on_failure
 
 
 class HomePage(BasePage):

@@ -4,16 +4,15 @@ import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
-from Pages.BasePage import BasePage, take_screenshot_on_failure
+from Project.Pages.BasePage import BasePage, take_screenshot_on_failure
 
 
 class SmartWindows(BasePage):
-    SAVED_SCHEDULE = (By.XPATH, "//table[@class='MuiTable-root admin-users_tableroot__yLP9W']")
+    SAVED_SCHEDULE = (By.XPATH, "(//div[@id='panel1bh-header'])[1]")
     SMART_WINDOWS = (By.LINK_TEXT, "Smart Windows")
     SCHEDULES = (By.LINK_TEXT, "Schedules")
     ADD_SCHEDULE = (By.XPATH, "//h6[text()='ADD SCHEDULE']")
     IMAGE = (By.XPATH, "//*[@id='root']/div/section[2]/div/div/div[1]/div[1]/div/img")
-
     """Schedule Details"""
     NAME = (By.XPATH, "//input[@name='name']")
     SELECT_TINT = (By.XPATH, "(//div[@class='schedule-form_tintCircle__1TtfZ']//div)[3]")
@@ -112,58 +111,130 @@ class SmartWindows(BasePage):
     def endtime(self, endtime):
         self.do_send_keys(self.END_TIME, endtime)
 
-    @allure.step("Select Days")
+    @allure.step("Select Days for Repeat")
     @take_screenshot_on_failure
     def sel_days(self):
         self.do_click(self.REPEAT)
+
+    @allure.step("Select Sunday")
+    @take_screenshot_on_failure
+    def sel_sun(self):
         self.do_click(self.SUNDAY)
+
+    @allure.step("Select Monday")
+    @take_screenshot_on_failure
+    def sel_mon(self):
         self.do_click(self.MONDAY)
+
+    @allure.step("Select Tuesday")
+    @take_screenshot_on_failure
+    def sel_tues(self):
         self.do_click(self.TUESDAY)
+
+    @allure.step("Select Wednesday")
+    @take_screenshot_on_failure
+    def sel_wed(self):
         self.do_click(self.WEDNESDAY)
+
+    @allure.step("Select Thursday")
+    @take_screenshot_on_failure
+    def sel_thurs(self):
         self.do_click(self.THURSDAY)
+
+    @allure.step("Select Friday")
+    @take_screenshot_on_failure
+    def sel_fri(self):
         self.do_click(self.FRIDAY)
+
+    @allure.step("Select Saturday")
+    @take_screenshot_on_failure
+    def sel_sat(self):
         self.do_click(self.SATURDAY)
+
+    @allure.step("Select Zone")
+    @take_screenshot_on_failure
+    def zone(self):
+        self.do_click(self.ZONE_GROUPS)
 
     @allure.step("Save")
     @take_screenshot_on_failure
     def schedule_save(self):
-        time.sleep(2)
-        self.do_click(self.ZONE_GROUPS)
         self.do_click(self.SAVE)
+
+    @allure.step("Verify Schedule")
+    @take_screenshot_on_failure
+    def verify_saved_schedule(self):
         page_source = self.driver.page_source
         assert page_source.__contains__('Automatic')
 
     @allure.step("Verify Search")
+    @allure.step("Enter Schedule Name")
     @take_screenshot_on_failure
     def search_schedule(self, search_schedules):
         self.wait_for_element(self.SAVED_SCHEDULE)
-        time.sleep(4)
+        time.sleep(2)
         self.do_send_keys(self.SEARCH_SCHEDULES, search_schedules)
-        time.sleep(4)
-        self.wait_for_element(self.SAVED_SCHEDULE)
+
+    @allure.step("Search")
+    @take_screenshot_on_failure
+    def select_schedule(self):
         self.do_send_keys(self.SEARCH_SCHEDULES, Keys.ARROW_DOWN)
         self.do_send_keys(self.SEARCH_SCHEDULES, Keys.RETURN)
-        self.wait_for_element(self.SAVED_SCHEDULE)
 
     @allure.step("Verify Filter Feature")
     @take_screenshot_on_failure
-    def add_filter(self, from_date, to_date):
+    def add_filter(self):
         self.wait_for_element(self.SAVED_SCHEDULE)
+        time.sleep(3)
         self.do_click(self.FILTER_SCHEDULES)
+
+    @allure.step("Enter Start Date")
+    @take_screenshot_on_failure
+    def st_date(self, from_date):
         self.do_send_keys(self.FROM_DATE, from_date)
+
+    @allure.step("Enter End Date")
+    @take_screenshot_on_failure
+    def ed_date(self, to_date):
         self.do_send_keys(self.TO_DATE, to_date)
+
+    @allure.step("Click Apply")
+    @take_screenshot_on_failure
+    def apply(self):
         self.do_click(self.APPLY)
         self.do_click(self.FILTER_SCHEDULES)
 
     @allure.step("Verify Edit Schedule Feature")
+    @allure.step("Click on edit option")
     @take_screenshot_on_failure
-    def edit_schedule(self, name, starttime, endtime):
+    def edit_schedule(self):
         self.wait_for_element(self.SAVED_SCHEDULE)
+        time.sleep(2)
         self.do_click(self.EDIT)
+
+    @allure.step("Clear And Enter Schedule Name")
+    @take_screenshot_on_failure
+    def edit_name(self, name):
         self.back_space(self.NAME)
         self.do_send_keys(self.NAME, name)
+
+    @allure.step("Enter Start Date")
+    @take_screenshot_on_failure
+    def edit_starttime(self, starttime):
         self.do_send_keys(self.START_TIME, starttime)
+
+    @allure.step("Enter End Date")
+    @take_screenshot_on_failure
+    def edit_endtime(self, endtime):
         self.do_send_keys(self.END_TIME, endtime)
+
+    @allure.step("Click Save")
+    @take_screenshot_on_failure
+    def edit_save(self):
         self.do_click(self.SAVE)
+
+    @allure.step("Verify Edit Saved Schedule")
+    @take_screenshot_on_failure
+    def verify_edit(self):
         page_source = self.driver.page_source
         assert page_source.__contains__('Automatic Edit')
